@@ -1,50 +1,63 @@
 package piscine
 
 import (
-	"fmt"
+	"ft"
 )
 
 func FOVSecuring(params []string) {
 	board, ok := SettingBoard(params)
 	if !ok {
 		PrintStrln("Error")
+		return
 	}
-	fmt.Println(board)
+	result, isSolved := Securing(board, 0, 0)
+	if isSolved {
+		PrintStrln("clear")
+		PrintBoard(result)
+	} else {
+		PrintStrln("Error")
+		PrintBoard(result)
+	}
 }
 
-func SettingBoard(strings []string) ([][]rune, bool) {
-	board := make([][]rune, 0)
-	for _, str := range strings {
-		board = append(board, []rune(str))
-	}
-	if !IsValidBoard(board) {
-		return [][]rune{}, false
-	}
-	return board, true
-}
-
-func IsValidBoard(board [][]rune) bool {
-	rowCount := 0
+func PrintBoard(board [][]rune) {
 	for _, row := range board {
-		rowCount++
-		// mandatory rule
-		if GetLength(row) != 5 ||
-			!IsValidRow(row) {
-			return false
+		for _, r := range row {
+			ft.PrintRune(r)
 		}
+		ft.PrintRune('\n')
 	}
-	// mandatory rule
-	if rowCount != 5 {
+}
+
+func Securing(board [][]rune, x, y int) ([][]rune, bool) {
+	for ; y < 5; y++ {
+		for ; x < 5; x++ {
+			if placeBlackSquare(board, x, y) {
+				result, comp := Securing(board, x, y)
+				if comp {
+					return result, comp
+				}
+				board[y][x] = '.'
+				if x == 4 && y == 4 {
+					return result, true
+				}
+			}
+		}
+		x = 0
+	}
+	return board, false
+}
+
+func placeBlackSquare(board [][]rune, x, y int) bool {
+	if board[y][x] != '.' {
 		return false
 	}
-	return true
-}
-
-func IsValidRow(row []rune) bool {
-	for _, r := range row {
-		if r != '.' && !IsNumeric(r) {
-			return false
-		}
+	if y != 0 && board[y-1][x] == 'B' {
+		return false
 	}
+	if x != 0 && board[y][x-1] == 'B' {
+		return false
+	}
+	board[y][x] = 'B'
 	return true
 }
