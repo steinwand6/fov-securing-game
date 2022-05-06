@@ -52,10 +52,7 @@ func placeBlackSquare(board [][]rune, x, y int) bool {
 	if board[y][x] != '.' {
 		return false
 	}
-	if y != 0 && board[y-1][x] == 'B' {
-		return false
-	}
-	if x != 0 && board[y][x-1] == 'B' {
+	if isOrthogonallyAdjacent(board, x, y) {
 		return false
 	}
 	board[y][x] = 'B'
@@ -71,4 +68,9 @@ func placeBlackSquare(board [][]rune, x, y int) bool {
 		}
 	}
 	return true
+}
+
+func isOrthogonallyAdjacent(board [][]rune, x, y int) bool {
+	return (y != 0 && board[y-1][x] == 'B') ||
+		(x != 0 && board[y][x-1] == 'B')
 }
