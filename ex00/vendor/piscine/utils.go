@@ -21,3 +21,12 @@ func PrintStrln(s string) {
 	}
 	ft.PrintRune('\n')
 }
+
+func PrintBoard(board [][]rune) {
+	for _, row := range board {
+		for _, r := range row {
+			ft.PrintRune(r)
+		}
+		ft.PrintRune('\n')
+	}
+}

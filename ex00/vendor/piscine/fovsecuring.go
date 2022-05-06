@@ -1,9 +1,5 @@
 package piscine
 
-import (
-	"ft"
-)
-
 func FOVSecuring(params []string) {
 	board, ok := SettingBoard(params)
 	if !ok {
@@ -17,15 +13,6 @@ func FOVSecuring(params []string) {
 	} else {
 		PrintStrln("Error")
 		PrintBoard(result)
-	}
-}
-
-func PrintBoard(board [][]rune) {
-	for _, row := range board {
-		for _, r := range row {
-			ft.PrintRune(r)
-		}
-		ft.PrintRune('\n')
 	}
 }
 
