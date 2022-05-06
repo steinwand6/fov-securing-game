@@ -8,15 +8,16 @@ func FOVSecuring(params []string) {
 	}
 	result, isSolved := Securing(board, 0, 0)
 	if isSolved {
-		PrintStrln("clear")
 		PrintBoard(result)
 	} else {
 		PrintStrln("Error")
-		PrintBoard(result)
 	}
 }
 
 func Securing(board [][]rune, x, y int) ([][]rune, bool) {
+	if CheckFovAll(board) {
+		return board, true
+	}
 	for ; y < 5; y++ {
 		for ; x < 5; x++ {
 			if placeBlackSquare(board, x, y) {
@@ -25,9 +26,6 @@ func Securing(board [][]rune, x, y int) ([][]rune, bool) {
 					return result, comp
 				}
 				board[y][x] = '.'
-				if x == 4 && y == 4 {
-					return result, true
-				}
 			}
 		}
 		x = 0
