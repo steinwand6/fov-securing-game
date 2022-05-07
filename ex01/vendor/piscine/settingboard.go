@@ -15,23 +15,46 @@ func SettingBoard(strings []string) ([][]rune, bool) {
 }
 
 func isValidBoard(board [][]rune) bool {
-	for y, row := range board {
-		if y != 0 && len(row) != len(board[y-1]) ||
-			!isValidRow(row) {
+	col := 0
+	row := 0
+	if len(board) == 0 {
+		return false
+	}
+	for i, ir := range board {
+		if i == 0 {
+			col = len(ir)
+		} else if len(ir) != col {
 			return false
 		}
+		row++
 	}
-	// check square
-	if len(board) == 0 || len(board) != len(board[0]) {
+	if !isValidChar(board, col, row) {
 		return false
 	}
 	return true
 }
 
-func isValidRow(row []rune) bool {
-	for _, r := range row {
-		if r != '.' && !IsNumeric(r) {
-			return false
+func isValidChar(b [][]rune, col, row int) bool {
+	max := col + row - 1
+	max_c := '0'
+	over_ten := false
+	if max >= 10 {
+		max_c = rune(int('a') + (max - 10))
+		over_ten = true
+	} else {
+		max_c = rune(int('0') + max)
+	}
+	for _, r := range b {
+		for _, c := range r {
+			if over_ten {
+				if !(c >= '2' && c <= '9' || c >= 'a' && c <= max_c || c == '.') {
+					return false
+				}
+			} else {
+				if !(c >= '2' && c <= max_c || c == '.') {
+					return false
+				}
+			}
 		}
 	}
 	return true
