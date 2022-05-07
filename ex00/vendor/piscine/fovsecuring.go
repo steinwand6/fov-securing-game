@@ -1,5 +1,7 @@
 package piscine
 
+import "fmt"
+
 func FOVSecuring(params []string) {
 	board, ok := SettingBoard(params)
 	if !ok {
@@ -45,6 +47,11 @@ func placeBlackSquare(board [][]rune, x, y int) bool {
 		for ch_x := range row {
 			if board[ch_y][ch_x] == '.' || board[ch_y][ch_x] == 'B' {
 				continue
+			}
+			if ch_y < y && int(board[ch_y][ch_x]-'0') < GetFovX(board, x, y) {
+				fmt.Println(int(board[ch_y][ch_x]-'0'), GetFovX(board, x, y))
+				board[y][x] = '.'
+				return false
 			}
 			if int(board[ch_y][ch_x]-'0') > GetFov(board, ch_x, ch_y) {
 				board[y][x] = '.'
