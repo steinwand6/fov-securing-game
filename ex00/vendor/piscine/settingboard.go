@@ -15,17 +15,16 @@ func SettingBoard(strings []string) ([][]rune, bool) {
 }
 
 func isValidBoard(board [][]rune) bool {
-	rowCount := 0
-	for _, row := range board {
-		rowCount++
-		// mandatory rule
-		if GetLength(row) != 5 ||
-			!isValidRow(row) {
+	col := 0
+	row := 0
+	for i, ir := range board {
+		if len(ir) != 5 || !isValidRow(ir){
 			return false
 		}
+		row++
 	}
 	// mandatory rule
-	if rowCount != 5 {
+	if row != 5 {
 		return false
 	}
 	return true
@@ -33,7 +32,7 @@ func isValidBoard(board [][]rune) bool {
 
 func isValidRow(row []rune) bool {
 	for _, r := range row {
-		if r != '.' && !IsNumeric(r) {
+		if r != '.' && !IsBoardNum(r) {
 			return false
 		}
 	}
