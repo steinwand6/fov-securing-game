@@ -2,14 +2,15 @@ package piscine
 
 import "os"
 
-func ReadFile(file string) []string {
-	return (FormatFile(Read(file)))
+func ReadFile(file string) ([]string, bool) {
+	s, isfile := Read(file)
+	return FormatFile(s), isfile
 }
 
-func Read(file string) string {
+func Read(file string) (string, bool) {
 	f, err := os.Open(file)
 	if err != nil {
-		PrintStrln(err.Error())
+		return "", false
 	}
 	defer f.Close()
 	buf := make([]byte, 1024)
@@ -21,7 +22,10 @@ func Read(file string) string {
 		}
 		str += string(buf[:n])
 	}
-	return str
+	if err != nil {
+		return "", false
+	}
+	return str, true
 }
 
 func FormatFile(s string) []string {
@@ -30,18 +34,18 @@ func FormatFile(s string) []string {
 	idx := 0
 	for i, c := range s {
 		if c == '\n' {
-			ret = append(ret, s[idx:i+1])
+			ret = append(ret, s[idx:i])
 			idx = i+1
 			row--
 		}
 	}
 	if row > 0 {
-		ret = appned(ret, s[idx:])
+		ret = append(ret, s[idx:])
 	}
 	return ret
 }
 
-func CountRows(s stirng) int {
+func CountRows(s string) int {
 	row := 1
 	for _, c := range s {
 		if c == '\n' {
