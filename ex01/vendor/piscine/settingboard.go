@@ -47,11 +47,11 @@ func isValidChar(b [][]rune, col, row int) bool {
 	for _, r := range b {
 		for _, c := range r {
 			if over_ten {
-				if !((c >= '2' && c <= '9') || (c >= 'a' && c <= max_c) || c == '.') {
+				if !((c >= '2' && c <= '9') || (c >= 'a' && c <= max_c) || c == '.' || c == 'B') {
 					return false
 				}
 			} else {
-				if !((c >= '2' && c <= max_c) || c == '.') {
+				if !((c >= '2' && c <= max_c) || c == '.' || c == 'B') {
 					return false
 				}
 			}

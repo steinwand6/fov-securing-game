@@ -11,11 +11,13 @@ func convBoardRtoInt(b [][]rune) [][]int {
 				ib[i][j] = int(r - '0')
 			} else if r == '.' {
 				ib[i][j] = 0
+			} else if r == 'B' {
+				ib[i][j] = 1
 			} else {
 				ib[i][j] = int(r - 'a' + 10)
 			}
 		}
 	}
-	fmt.Println("intBoard : ", ib)
+	fmt.Println(ib)
 	return ib
 }
