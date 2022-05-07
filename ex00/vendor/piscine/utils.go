@@ -11,8 +11,8 @@ func GetLength(ary []rune) (len int) {
 	return len
 }
 
-func IsNumeric(r rune) bool {
-	return r >= '0' && r <= '9'
+func IsBoardNum(r rune) bool {
+	return r >= '2' && r <= '9'
 }
 
 func PrintStrln(s string) {
