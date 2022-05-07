@@ -1,11 +1,20 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"piscine"
 )
 
 func main() {
-	params := os.Args[1:]
-	piscine.FOVSecuring(params)
+	argc := len(os.Args)
+	for i := 1; i < argc; i++ {
+		f, isfile := piscine.ReadFile(os.Args[i])
+		if isfile == true {
+			piscine.FOVSecuring(f)
+		} else {
+			piscine.FOVSecuring(os.Args[1:])
+			break
+		}
+	}
 }
