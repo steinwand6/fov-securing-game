@@ -2,25 +2,10 @@ package piscine
 
 func IsSeparated(board [][]rune) bool {
 	b2 := deepCopyBoard(board)
-	first := true
 	for y, row := range b2 {
 		for x, elm := range row {
-			if first && elm != 'B' {
-				b2[y][x] = 'W'
-				first = false
-			}
-			if y > 0 && b2[y-1][x] == 'W' && elm != 'B' {
-				b2[y][x] = 'W'
-			} else if x > 0 && b2[y][x-1] == 'W' && elm != 'B' {
-				b2[y][x] = 'W'
-			}
-		}
-		for x := len(row) - 1; x >= 0; x-- {
-			elm := b2[y][x]
-			if y > 0 && b2[y-1][x] == 'W' && elm != 'B' {
-				b2[y][x] = 'W'
-			} else if x > 0 && b2[y][x-1] == 'W' && elm != 'B' {
-				b2[y][x] = 'W'
+			if elm != 'B' {
+				fill(b2, x, y)
 			}
 		}
 	}
@@ -32,6 +17,20 @@ func IsSeparated(board [][]rune) bool {
 		}
 	}
 	return false
+}
+
+func fill(board [][]rune, x, y int) {
+	if y < 0 || x < 0 || y >= len(board) || x >= len(board[0]) {
+		return
+	}
+	if board[y][x] == 'W' || board[y][x] == 'B' {
+		return
+	}
+	board[y][x] = 'W'
+	fill(board, x+1, y)
+	fill(board, x-1, y)
+	fill(board, x, y-1)
+	fill(board, x, y+1)
 }
 
 func deepCopyBoard(original [][]rune) [][]rune {
