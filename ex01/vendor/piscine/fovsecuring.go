@@ -15,11 +15,12 @@ func FOVSecuring(params []string) {
 }
 
 func Securing(board [][]rune, x, y int) ([][]rune, bool) {
+	m := len(board)
 	if CheckFovAll(board) && !IsSeparated(board) {
 		return board, true
 	}
-	for ; y < 5; y++ {
-		for ; x < 5; x++ {
+	for ; y < m; y++ {
+		for ; x < m; x++ {
 			if placeBlackSquare(board, x, y) {
 				result, comp := Securing(board, x, y)
 				if comp {

@@ -19,6 +19,7 @@ func CheckFov(board [][]rune, x, y int) bool {
 }
 
 func GetFov(board [][]rune, x, y int) int {
+	m := len(board)
 	result := 1
 	// ←
 	for i := x - 1; i >= 0; i-- {
@@ -28,7 +29,7 @@ func GetFov(board [][]rune, x, y int) int {
 		result++
 	}
 	// →
-	for i := x + 1; i < 5; i++ {
+	for i := x + 1; i < m; i++ {
 		if board[y][i] == 'B' {
 			break
 		}
@@ -42,7 +43,7 @@ func GetFov(board [][]rune, x, y int) int {
 		result++
 	}
 	//↓
-	for i := y + 1; i < 5; i++ {
+	for i := y + 1; i < m; i++ {
 		if board[i][x] == 'B' {
 			break
 		}

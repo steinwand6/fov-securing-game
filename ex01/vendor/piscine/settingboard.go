@@ -15,17 +15,14 @@ func SettingBoard(strings []string) ([][]rune, bool) {
 }
 
 func isValidBoard(board [][]rune) bool {
-	rowCount := 0
-	for _, row := range board {
-		rowCount++
-		// mandatory rule
-		if GetLength(row) != 5 ||
+	for y, row := range board {
+		if y != 0 && len(row) != len(board[y-1]) ||
 			!isValidRow(row) {
 			return false
 		}
 	}
-	// mandatory rule
-	if rowCount != 5 {
+	// check square
+	if len(board) == 0 || len(board) != len(board[0]) {
 		return false
 	}
 	return true
