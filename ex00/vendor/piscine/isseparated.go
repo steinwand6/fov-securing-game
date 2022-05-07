@@ -6,9 +6,11 @@ func IsSeparated(board [][]rune) bool {
 		for x, elm := range row {
 			if elm != 'B' {
 				fill(b2, x, y)
+				goto judge
 			}
 		}
 	}
+judge:
 	for _, row := range b2 {
 		for _, elm := range row {
 			if elm != 'W' && elm != 'B' {
