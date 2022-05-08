@@ -1,27 +1,25 @@
 package piscine
 
-import "fmt"
-import "math/rand"
-import "os"
-import "strconv"
+import (
+	"fmt"
+	"math/rand"
+	"time"
+)
 
-func output(str string, board []string) {
-	fmt.Print(str);
-	fmt.Println("=========\n");
-	for h := 0; h < len(board); h++{ 
+func output(board []string) {
+	fmt.Println("=========\n")
+	for h := 0; h < len(board); h++ {
 		print(board[h])
 		fmt.Println("")
 	}
-		fmt.Println("\nanswer--\n")
-		FOVSecuring(board)
-		fmt.Println("")
+	fmt.Println("\n")
 }
 
 func randFit(max int, frequency int) string {
 	//Change the arg os the rand.Intn for the currency of the '.'.
 	rand.Seed(time.Now().UnixNano())
 	str := ""
-	for i := 0; i < max; i++{
+	for i := 0; i < max; i++ {
 		if rand.Intn(frequency) == 1 {
 			str += (string)('0' + rand.Intn(7) + 2)
 		} else {
@@ -36,7 +34,7 @@ func CheckGenArg(size, freq, qty int) {
 		fmt.Println("Generate Error:\n")
 		fmt.Println(">> size is too small. size must be bigger than 2")
 	}
-	if freq > size * size {
+	if freq > size*size {
 		fmt.Println("Generate Error:\n")
 		fmt.Println(">> freq is too big. freq must be less than size * size.")
 	}
@@ -49,22 +47,23 @@ func CheckGenArg(size, freq, qty int) {
 func GenerateBoard(s, f, q int) {
 	CheckGenArg(s, f, q)
 	if s >= 2 {
-		fmt.Println("//////////////////////////////////////////");
-		fmt.Println("random maps");
-		fmt.Println("size : ", s, "freq : ", freq, "qty : ", q)
-		fmt.Println("//////////////////////////////////////////");
+		fmt.Println("//////////////////////////////////////////")
+		fmt.Println("random maps")
+		fmt.Println("size : ", s, "freq : ", f, "qty : ", q)
+		fmt.Println("//////////////////////////////////////////")
 		for at := 0; at < q; at++ {
 			board := []string{}
-			for i := 0; i < s; i++{
+			for i := 0; i < s; i++ {
 				board = append(board, "")
 			}
-			for j := 0; j < s; j++{
+			for j := 0; j < s; j++ {
 				board[j] = randFit(s, f)
 			}
-			output("rand_test", board)
+			output(board)
 		}
 	}
 }
+
 // 	fmt.Println("//////////////////////////////////////////");
 // 	fmt.Println("valid maps");
 // 	fmt.Println("//////////////////////////////////////////\n");
@@ -97,7 +96,6 @@ func GenerateBoard(s, f, q int) {
 // 			"...69",
 // 	}
 // 	output("pdf_v3", board)
-
 
 // 	board = []string{
 // 			"9....",
@@ -204,7 +202,6 @@ func GenerateBoard(s, f, q int) {
 // 		}
 // 	output("invs", board)
 
-
 // 	board = []string{
 // 		".",
 // 	}
@@ -245,11 +242,11 @@ func GenerateBoard(s, f, q int) {
 // 		"...B.",
 // 	}
 // 	output("B_contaminated2", board)
-	
+
 // 	// zero and 1
-	
+
 // 	return;
-	
+
 // 	fmt.Println("//////////////////////////////////////////");
 // 	fmt.Println("random ---------");
 // 	fmt.Println("//////////////////////////////////////////\n");
