@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var visual_flg *int = flag.Int("v", 0, "solver visualize")
+var visual_flg *int = flag.Int("v", 0, "solver visualize -v=[speed]")
 var tryCount int
 
 func FOVSecuringInt(params []string) {
