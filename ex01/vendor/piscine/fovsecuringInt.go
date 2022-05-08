@@ -6,7 +6,7 @@ func FOVSecuringInt(params []string) {
 	fmt.Println(params)
 	brd, ok := SettingBoard(params)
 	if !ok {
-		PrintStrln("Error")
+		PrintStrln("map Error")
 		return
 	}
 	ib := convBoardRtoInt(brd)
@@ -16,7 +16,7 @@ func FOVSecuringInt(params []string) {
 	if isSolved {
 		fmt.Println(result)
 	} else {
-		PrintStrln("Error")
+		PrintStrln("resolve Error")
 	}
 }
 
@@ -74,7 +74,7 @@ func placeUnplaceable(brd [][]int, x, y int) {
 func SecuringInt(brd [][]int, x, y int) ([][]int, bool) {
 	size_x := len(brd[0])
 	size_y := len(brd)
-	if CheckFovAll(brd) && !IsSeparated(brd) {
+	if CheckFovAllInt(brd) && !IsSeparatedInt(brd) {
 		return brd, true
 	}
 	for ; y < size_y; y++ {
@@ -102,11 +102,11 @@ func placeBlackInt(brd [][]int, x, y int) bool {
 			if brd[iy][ix] <= 1 {
 				continue
 			}
-			if iy < y && brd[iy][ix] < GetFovX(brd, ix, iy) {
+			if iy < y && brd[iy][ix] < GetFovXInt(brd, ix, iy) {
 				brd[y][x] = 0
 				return false
 			}
-			if brd[iy][ix] > GetFov(brd, ix, iy) {
+			if brd[iy][ix] > GetFovInt(brd, ix, iy) {
 				brd[y][x] = 0
 				return false
 			}

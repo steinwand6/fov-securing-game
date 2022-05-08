@@ -5,7 +5,7 @@ func CheckFovAllInt(b [][]int) bool {
 		for x, elm := range row {
 			if elm <= 1 {
 				continue
-			} else if !CheckFov(b, x, y){
+			} else if !CheckFovInt(b, x, y){
 				return false
 			}
 		}
@@ -13,15 +13,15 @@ func CheckFovAllInt(b [][]int) bool {
 	return true
 }
 
-func CheckFov(b [][]int, x, y int) bool {
-	return b[y][x] == GetFov(b, x, y) // return int is better ?? pending
+func CheckFovInt(b [][]int, x, y int) bool {
+	return b[y][x] == GetFovInt(b, x, y) // return int is better ?? pending
 }
 
 func GetFovInt(b [][]int, x, y int) int {
-	return GetFovX(b, x, y) + GetFovY(b, x, y) - 1
+	return GetFovXInt(b, x, y) + GetFovYInt(b, x, y) - 1
 }
 
-func GetFovX(b [][]int, x, y int) int {
+func GetFovXInt(b [][]int, x, y int) int {
 	m := len(b[0])
 	fov := 1
 	// left
@@ -41,7 +41,7 @@ func GetFovX(b [][]int, x, y int) int {
 	return fov
 }
 
-func GetFovY(b [][]int, x, y int) int {
+func GetFovYInt(b [][]int, x, y int) int {
 	m := len(b)
 	fov := 1
 	// top
