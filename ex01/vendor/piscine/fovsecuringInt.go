@@ -3,10 +3,9 @@ package piscine
 import "fmt"
 
 func FOVSecuringInt(params []string) {
-	fmt.Println(params)
 	brd, ok := SettingBoard(params)
 	if !ok {
-		PrintStrln("Error")
+		PrintStrln("map Error")
 		return
 	}
 	ib := convBoardRtoInt(brd)
@@ -14,9 +13,9 @@ func FOVSecuringInt(params []string) {
 	fmt.Println(ib)
 	result, isSolved := SecuringInt(ib, 0, 0)
 	if isSolved {
-		fmt.Println(result)
+		PrintBoardInt(result)
 	} else {
-		PrintStrln("Error")
+		PrintStrln("resolve Error")
 	}
 }
 
@@ -32,6 +31,24 @@ func initBoard(brd [][]int) {
 			}
 		}
 	}
+}
+
+func isElemInCol(brd [][]int, x int) bool {
+	for _, row := range brd {
+		if row[x] >= 2 {
+			return true
+		}
+	}
+	return false
+}
+
+func isElemInRow(a []int) bool {
+	for _, v := range a {
+		if v >= 2 {
+			return true
+		}
+	}
+	return false
 }
 
 func placeUnplaceable(brd [][]int, x, y int) {
@@ -74,7 +91,7 @@ func placeUnplaceable(brd [][]int, x, y int) {
 func SecuringInt(brd [][]int, x, y int) ([][]int, bool) {
 	size_x := len(brd[0])
 	size_y := len(brd)
-	if CheckFovAll(brd) && !IsSeparated(brd) {
+	if CheckFovAllInt(brd) && !IsSeparatedInt(brd) {
 		return brd, true
 	}
 	for ; y < size_y; y++ {
@@ -84,7 +101,7 @@ func SecuringInt(brd [][]int, x, y int) ([][]int, bool) {
 				if comp {
 					return result, comp
 				}
-				brd[y][x] = -1
+				brd[y][x] = 0
 			}
 		}
 		x = 0
@@ -102,11 +119,11 @@ func placeBlackInt(brd [][]int, x, y int) bool {
 			if brd[iy][ix] <= 1 {
 				continue
 			}
-			if iy < y && brd[iy][ix] < GetFovX(brd, ix, iy) {
+			if iy < y && brd[iy][ix] < GetFovXInt(brd, ix, iy) {
 				brd[y][x] = 0
 				return false
 			}
-			if brd[iy][ix] > GetFov(brd, ix, iy) {
+			if brd[iy][ix] > GetFovInt(brd, ix, iy) {
 				brd[y][x] = 0
 				return false
 			}
@@ -115,23 +132,6 @@ func placeBlackInt(brd [][]int, x, y int) bool {
 	return true
 }
 
-func isElemInCol(brd [][]int, x int) bool {
-	for _, row := range brd {
-		if row[x] >= 2 {
-			return true
-		}
-	}
-	return false
-}
-
-func isElemInRow(a []int) bool {
-	for _, v := range a {
-		if v >= 2 {
-			return true
-		}
-	}
-	return false
-}
 
 // origin : orthogonallyAdjascent
 func isClosedBlack(brd [][]int, x, y int) bool {

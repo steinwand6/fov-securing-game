@@ -44,3 +44,19 @@ func PrintBoard(board [][]rune) {
 	fmt.Print("\033[39m")
 	fmt.Print("\033[49m")
 }
+
+func PrintBoardInt(board [][]int) {
+	for _, row := range board {
+		for _, r := range row {
+			if r == 1 {
+				fmt.Print("B ")
+			} else if r < 1 {
+				fmt.Print(". ")
+			} else {
+				c := rune(r+'0')
+				fmt.Printf("%c ", c)
+			}
+		}
+		ft.PrintRune('\n')
+	}
+}

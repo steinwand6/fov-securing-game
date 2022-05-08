@@ -1,7 +1,5 @@
 package piscine
 
-import "fmt"
-
 func convBoardRtoInt(b [][]rune) [][]int {
 	ib := make([][]int, len(b))
 	for i, s := range b {
@@ -18,6 +16,5 @@ func convBoardRtoInt(b [][]rune) [][]int {
 			}
 		}
 	}
-	fmt.Println(ib)
 	return ib
 }

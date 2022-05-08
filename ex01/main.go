@@ -6,20 +6,17 @@ import (
 	"piscine"
 )
 
-var (
-	v_flg bool
-	g_flg int
-)
-
-func init() {
-	//flag.BoolVar(&v_flg, "v", false, "solver visualize")
-	flag.IntVar(&g_flg, "g", 5, "generate random map")
-}
-
 func main() {
+	g_flag := flag.Bool("g", false, "generate random maps.")
+	s_flag := flag.Int("s", 5, "use with -g, size of map. -s=[2 - ]")
+	f_flag := flag.Int("f", 15, "use with -g, frequency of number. -f=[2 - size * size].")
+	q_flag := flag.Int("q", 2, "use with -g, generate quantity. -q=[1 - 10]")
 	flag.Parse()
+	if *g_flag {
+		piscine.GenerateBoard(*s_flag, *f_flag, *q_flag)
+		os.Exit(0)
+	}
 	argc := len(os.Args)
-
 	for i := 1 + flag.NFlag(); i < argc; i++ {
 		f, isfile := piscine.ReadFile(os.Args[i])
 		if isfile == true {
