@@ -42,4 +42,5 @@ func PrintBoard(board [][]rune) {
 		ft.PrintRune('\n')
 	}
 	fmt.Print("\033[39m")
+	fmt.Print("\033[49m")
 }
