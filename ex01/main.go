@@ -17,7 +17,7 @@ func main() {
 			piscine.FOVSecuring(f)
 		} else {
 			piscine.FOVSecuring(os.Args[1:])
-			break	
+			break
 		}
 	}
 }
