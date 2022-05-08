@@ -12,12 +12,12 @@ func FOVSecuringInt(params []string) {
 	ib := convBoardRtoInt(brd)
 	initBoard(ib)
 	fmt.Println(ib)
-	// result, isSolved := Securing(ib, 0, 0)
-	// if isSolved {
-	// 	PrintBoard(result)
-	// } else {
-	// 	PrintStrln("Error")
-	// }
+	result, isSolved := SecuringInt(ib, 0, 0)
+	if isSolved {
+		fmt.Println(result)
+	} else {
+		PrintStrln("Error")
+	}
 }
 
 func initBoard(brd [][]int) {
@@ -71,60 +71,53 @@ func placeUnplaceable(brd [][]int, x, y int) {
 	}
 }
 
-// func Securing(brd [][]int, x, y int) ([][]int, bool) {
-// 	size_x := len(brd[0])
-// 	size_y := len(brd)
-// 	if CheckFovAll(brd) && !IsSeparated(brd) {
-// 		return brd, true
-// 	}
-// 	for ; y < size_y; y++ {
-// 		for ; x < size_x; x++ {
-// 			if placeBlackSquare(brd, x, y) {
-// 				result, comp := Securing(brd, x, y)
-// 				if comp {
-// 					return result, comp
-// 				}
-// 				brd[y][x] = -1
-// 			}
-// 		}
-// 		x = 0
-// 	}
-// 	return brd, false
-// }
+func SecuringInt(brd [][]int, x, y int) ([][]int, bool) {
+	size_x := len(brd[0])
+	size_y := len(brd)
+	if CheckFovAll(brd) && !IsSeparated(brd) {
+		return brd, true
+	}
+	for ; y < size_y; y++ {
+		for ; x < size_x; x++ {
+			if placeBlackInt(brd, x, y) {
+				result, comp := SecuringInt(brd, x, y)
+				if comp {
+					return result, comp
+				}
+				brd[y][x] = -1
+			}
+		}
+		x = 0
+	}
+	return brd, false
+}
 
-// func placeBlackSquare(brd [][]int, x, y int) bool {
-// 	if brd[y][x] != '.' {
-// 		return false
-// 	}
-// 	if isOrthogonallyAdjacent(brd, x, y) {
-// 		return false
-// 	}
-// 	if !ContainElementRow(brd[y]) && !ContainElementCol(brd, x) {
-// 		return false
-// 	}
-// 	brd[y][x] = 'B'
-// 	for ch_y, row := range brd {
-// 		for ch_x := range row {
-// 			if brd[ch_y][ch_x] == '.' || brd[ch_y][ch_x] == 'B' {
-// 				continue
-// 			}
-// 			if ch_y < y &&
-// 				int(brd[ch_y][ch_x]-'0') < GetFovX(brd, ch_x, ch_y) {
-// 				brd[y][x] = '.'
-// 				return false
-// 			}
-// 			if int(brd[ch_y][ch_x]-'0') > GetFov(brd, ch_x, ch_y) {
-// 				brd[y][x] = '.'
-// 				return false
-// 			}
-// 		}
-// 	}
-// 	return true
-// }
+func placeBlackInt(brd [][]int, x, y int) bool {
+	if brd[y][x] != 0 || isClosedBlack(brd, x, y) {
+		return false
+	}
+	brd[y][x] = 1
+	for iy, row := range brd {
+		for ix := range row {
+			if brd[iy][ix] <= 1 {
+				continue
+			}
+			if iy < y && brd[iy][ix] < GetFovX(brd, ix, iy) {
+				brd[y][x] = 0
+				return false
+			}
+			if brd[iy][ix] > GetFov(brd, ix, iy) {
+				brd[y][x] = 0
+				return false
+			}
+		}
+	}
+	return true
+}
 
 func isElemInCol(brd [][]int, x int) bool {
 	for _, row := range brd {
-		if row[x] != 0 && row[x] != 1 {
+		if row[x] >= 2 {
 			return true
 		}
 	}
@@ -133,14 +126,15 @@ func isElemInCol(brd [][]int, x int) bool {
 
 func isElemInRow(a []int) bool {
 	for _, v := range a {
-		if v != 0 && v != 1 {
+		if v >= 2 {
 			return true
 		}
 	}
 	return false
 }
 
-// func isOrthogonallyAdjacent(brd [][]int, x, y int) bool {
-// 	return (y != 0 && brd[y-1][x] == 1) ||
-// 		(x != 0 && brd[y][x-1] == 1)
-// }
+// origin : orthogonallyAdjascent
+func isClosedBlack(brd [][]int, x, y int) bool {
+	return (y != 0 && brd[y-1][x] == 1) ||
+		(x != 0 && brd[y][x-1] == 1)
+}
