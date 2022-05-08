@@ -14,7 +14,7 @@ func CheckFovAllInt(b [][]int) bool {
 }
 
 func CheckFovInt(b [][]int, x, y int) bool {
-	return b[y][x] == GetFovInt(b, x, y) // return int is better ?? pending
+	return b[y][x] == GetFovInt(b, x, y)
 }
 
 func GetFovInt(b [][]int, x, y int) int {

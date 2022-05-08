@@ -3,7 +3,6 @@ package piscine
 import "fmt"
 
 func FOVSecuringInt(params []string) {
-	fmt.Println(params)
 	brd, ok := SettingBoard(params)
 	if !ok {
 		PrintStrln("map Error")
@@ -14,7 +13,7 @@ func FOVSecuringInt(params []string) {
 	fmt.Println(ib)
 	result, isSolved := SecuringInt(ib, 0, 0)
 	if isSolved {
-		fmt.Println(result)
+		PrintBoardInt(result)
 	} else {
 		PrintStrln("resolve Error")
 	}
@@ -32,6 +31,24 @@ func initBoard(brd [][]int) {
 			}
 		}
 	}
+}
+
+func isElemInCol(brd [][]int, x int) bool {
+	for _, row := range brd {
+		if row[x] >= 2 {
+			return true
+		}
+	}
+	return false
+}
+
+func isElemInRow(a []int) bool {
+	for _, v := range a {
+		if v >= 2 {
+			return true
+		}
+	}
+	return false
 }
 
 func placeUnplaceable(brd [][]int, x, y int) {
@@ -84,7 +101,7 @@ func SecuringInt(brd [][]int, x, y int) ([][]int, bool) {
 				if comp {
 					return result, comp
 				}
-				brd[y][x] = -1
+				brd[y][x] = 0
 			}
 		}
 		x = 0
@@ -115,23 +132,6 @@ func placeBlackInt(brd [][]int, x, y int) bool {
 	return true
 }
 
-func isElemInCol(brd [][]int, x int) bool {
-	for _, row := range brd {
-		if row[x] >= 2 {
-			return true
-		}
-	}
-	return false
-}
-
-func isElemInRow(a []int) bool {
-	for _, v := range a {
-		if v >= 2 {
-			return true
-		}
-	}
-	return false
-}
 
 // origin : orthogonallyAdjascent
 func isClosedBlack(brd [][]int, x, y int) bool {

@@ -4,7 +4,7 @@ func IsSeparatedInt(b [][]int) bool {
 	b2 := deepCopyBoardInt(b)
 	for y, row := range b2 {
 		for x, elm := range row {
-			if elm != 1 || elm != -42 {
+			if elm != 1 {
 				fillInt(b2, x, y)
 				goto judge
 			}
@@ -13,7 +13,7 @@ func IsSeparatedInt(b [][]int) bool {
 judge:
 	for _, row := range b2 {
 		for _, elm := range row {
-			if elm >= 2 {
+			if elm != 1 || elm == -42 {
 				return true
 			}
 		}
