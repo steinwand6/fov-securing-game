@@ -46,17 +46,26 @@ func PrintBoard(board [][]rune) {
 }
 
 func PrintBoardInt(board [][]int) {
+	fmt.Print("\033[7m")
 	for _, row := range board {
 		for _, r := range row {
 			if r == 1 {
+				fmt.Print("\033[37m")
+				fmt.Print("\033[40m")
 				fmt.Print("B ")
 			} else if r < 1 {
+				fmt.Print("\033[39m")
+				fmt.Print("\033[49m")
 				fmt.Print(". ")
 			} else {
-				c := rune(r+'0')
+				fmt.Print("\033[39m")
+				fmt.Print("\033[49m")
+				c := rune(r + '0')
 				fmt.Printf("%c ", c)
 			}
 		}
 		ft.PrintRune('\n')
 	}
+	fmt.Print("\033[39m")
+	fmt.Print("\033[49m")
 }

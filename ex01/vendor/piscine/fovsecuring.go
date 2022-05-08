@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-var v_flg *int = flag.Int("v", 0, "solver visualize")
+var v_flg *int = flag.Int("d", 0, "solver visualize")
 var try int
 
 func FOVSecuring(params []string) {

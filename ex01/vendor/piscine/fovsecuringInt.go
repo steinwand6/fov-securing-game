@@ -1,6 +1,14 @@
 package piscine
 
-import "fmt"
+import (
+	"flag"
+	"fmt"
+	"os"
+	"time"
+)
+
+var visual_flg *int = flag.Int("v", 0, "solver visualize")
+var tryCount int
 
 func FOVSecuringInt(params []string) {
 	brd, ok := SettingBoard(params)
@@ -12,10 +20,16 @@ func FOVSecuringInt(params []string) {
 	initBoard(ib)
 	fmt.Println(ib)
 	result, isSolved := SecuringInt(ib, 0, 0)
+	if *visual_flg > 0 && *visual_flg < 1000 {
+		fmt.Fprintf(os.Stdout, "\x1b[2J")
+		fmt.Fprintf(os.Stdout, "\x1b[1;1H")
+	}
 	if isSolved {
+		fmt.Printf("[Success(try: %d)]\n", tryCount)
 		PrintBoardInt(result)
 	} else {
-		PrintStrln("resolve Error")
+		fmt.Printf("[Error(try: %d)]\n", tryCount)
+		PrintBoardInt(result)
 	}
 }
 
@@ -91,6 +105,17 @@ func placeUnplaceable(brd [][]int, x, y int) {
 func SecuringInt(brd [][]int, x, y int) ([][]int, bool) {
 	size_x := len(brd[0])
 	size_y := len(brd)
+	flag.Parse()
+	tryCount++
+	if *visual_flg > 0 && *visual_flg < 1000 {
+		time.Sleep(time.Duration(*visual_flg) * time.Millisecond)
+		fmt.Println(visual_flg)
+		fmt.Fprintf(os.Stdout, "\x1b[2J")
+		fmt.Fprintf(os.Stdout, "\x1b[1;1H")
+		fmt.Printf("[try: %d]\n", tryCount)
+		PrintBoardInt(brd)
+	}
+
 	if CheckFovAllInt(brd) && !IsSeparatedInt(brd) {
 		return brd, true
 	}
@@ -131,7 +156,6 @@ func placeBlackInt(brd [][]int, x, y int) bool {
 	}
 	return true
 }
-
 
 // origin : orthogonallyAdjascent
 func isClosedBlack(brd [][]int, x, y int) bool {

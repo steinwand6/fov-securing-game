@@ -13,7 +13,7 @@ func IsSeparatedInt(b [][]int) bool {
 judge:
 	for _, row := range b2 {
 		for _, elm := range row {
-			if elm != 1 || elm == -42 {
+			if !(elm == 1 || elm == -42) {
 				return true
 			}
 		}
