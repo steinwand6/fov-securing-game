@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	g_flag := flag.Bool("g", false, "generate random maps.")
+	g_flag := flag.Bool("g", false, "generate random maps. options [-s] [-f] [-q]")
 	s_flag := flag.Int("s", 5, "use with -g, size of map. -s=[2 - ]")
 	f_flag := flag.Int("f", 15, "use with -g, frequency of number. -f=[2 - size * size].")
 	q_flag := flag.Int("q", 2, "use with -g, generate quantity. -q=[1 - 10]")
