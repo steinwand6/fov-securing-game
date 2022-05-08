@@ -6,8 +6,7 @@ func FOVSecuring(params []string) {
 		PrintStrln("Error")
 		return
 	}
-	convBoardRtoInt(board)
-	result, isSolved := Securing(ib, 0, 0)
+	result, isSolved := Securing(board, 0, 0)
 	if isSolved {
 		PrintBoard(result)
 	} else {
@@ -36,7 +35,7 @@ func Securing(board [][]rune, x, y int) ([][]rune, bool) {
 	return board, false
 }
 
-func placeBlackSquare(board [][]int, x, y int) bool {
+func placeBlackSquare(board [][]rune, x, y int) bool {
 	if board[y][x] != '.' {
 		return false
 	}
@@ -66,7 +65,7 @@ func placeBlackSquare(board [][]int, x, y int) bool {
 	return true
 }
 
-func ContainElementCol(board [][]int, x int) bool {
+func ContainElementCol(board [][]rune, x int) bool {
 	for _, row := range board {
 		if row[x] != '.' && row[x] != 'B' {
 			return true
@@ -75,7 +74,7 @@ func ContainElementCol(board [][]int, x int) bool {
 	return false
 }
 
-func ContainElementRow(a []int) bool {
+func ContainElementRow(a []rune) bool {
 	for _, v := range a {
 		if v != '.' && v != 'B' {
 			return true
@@ -84,7 +83,7 @@ func ContainElementRow(a []int) bool {
 	return false
 }
 
-func isOrthogonallyAdjacent(board [][]int, x, y int) bool {
+func isOrthogonallyAdjacent(board [][]rune, x, y int) bool {
 	return (y != 0 && board[y-1][x] == 'B') ||
 		(x != 0 && board[y][x-1] == 'B')
 }
