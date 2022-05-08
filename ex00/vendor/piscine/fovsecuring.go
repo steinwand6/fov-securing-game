@@ -46,6 +46,10 @@ func placeBlackSquare(board [][]rune, x, y int) bool {
 			if board[ch_y][ch_x] == '.' || board[ch_y][ch_x] == 'B' {
 				continue
 			}
+			if int(board[ch_y][ch_x]-'0') > GetFov(board, ch_x, ch_y) {
+				board[y][x] = '.'
+				return false
+			}
 		}
 	}
 	return true
