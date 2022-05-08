@@ -5,7 +5,7 @@ func CheckFovAllInt(b [][]int) bool {
 		for x, elm := range row {
 			if elm <= 1 {
 				continue
-			} else if !CheckFovInt(b, x, y){
+			} else if !CheckFovInt(b, x, y) {
 				return false
 			}
 		}
