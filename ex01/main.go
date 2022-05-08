@@ -6,12 +6,21 @@ import (
 	"piscine"
 )
 
+var (
+	v_flg bool
+	g_flg int
+)
+
+func init() {
+	//flag.BoolVar(&v_flg, "v", false, "solver visualize")
+	flag.IntVar(&g_flg, "g", 5, "generate random map")
+}
+
 func main() {
-	flag.Bool("v", false, "solver visualize")
-	flag.Int("g", 5, "generate random map")
 	flag.Parse()
 	argc := len(os.Args)
-	for i := 1; i < argc; i++ {
+
+	for i := 1 + flag.NFlag(); i < argc; i++ {
 		f, isfile := piscine.ReadFile(os.Args[i])
 		if isfile == true {
 			piscine.FOVSecuring(f)

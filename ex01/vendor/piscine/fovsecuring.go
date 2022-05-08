@@ -1,5 +1,15 @@
 package piscine
 
+import (
+	"flag"
+	"fmt"
+	"os"
+	"time"
+)
+
+var v_flg *int = flag.Int("v", 0, "solver visualize")
+var try int
+
 func FOVSecuring(params []string) {
 	board, ok := SettingBoard(params)
 	if !ok {
@@ -7,16 +17,32 @@ func FOVSecuring(params []string) {
 		return
 	}
 	result, isSolved := Securing(board, 0, 0)
+	if *v_flg > 0 && *v_flg < 1000 {
+		fmt.Fprintf(os.Stdout, "\x1b[2J")
+		fmt.Fprintf(os.Stdout, "\x1b[1;1H")
+	}
 	if isSolved {
+		fmt.Printf("[Success(try: %d)]\n", try)
 		PrintBoard(result)
 	} else {
-		PrintStrln("Error")
+		fmt.Printf("[Error(try: %d)]\n", try)
+		PrintBoard(result)
 	}
 }
 
 func Securing(board [][]rune, x, y int) ([][]rune, bool) {
 	m_y := len(board)
 	m_x := len(board[0])
+	flag.Parse()
+	try++
+	if *v_flg > 0 && *v_flg < 1000 {
+		time.Sleep(time.Duration(*v_flg) * time.Millisecond)
+		fmt.Println(v_flg)
+		fmt.Fprintf(os.Stdout, "\x1b[2J")
+		fmt.Fprintf(os.Stdout, "\x1b[1;1H")
+		fmt.Printf("[try: %d]\n", try)
+		PrintBoard(board)
+	}
 	if CheckFovAll(board) && !IsSeparated(board) {
 		return board, true
 	}

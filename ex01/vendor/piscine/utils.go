@@ -24,12 +24,25 @@ func PrintStrln(s string) {
 }
 
 func PrintBoard(board [][]rune) {
+	fmt.Print("\033[7m")
 	for _, row := range board {
 		for _, r := range row {
-			ft.PrintRune(r)
+			switch r {
+			case 'B':
+				fmt.Print("\033[37m")
+				fmt.Print("\033[40m")
+				fmt.Print("B")
+			default:
+				fmt.Print("\033[39m")
+				fmt.Print("\033[49m")
+				ft.PrintRune(r)
+			}
+			ft.PrintRune(' ')
 		}
 		ft.PrintRune('\n')
 	}
+	fmt.Print("\033[39m")
+	fmt.Print("\033[49m")
 }
 
 func PrintBoardInt(board [][]int) {
