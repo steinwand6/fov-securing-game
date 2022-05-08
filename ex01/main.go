@@ -14,9 +14,9 @@ func main() {
 	for i := 1; i < argc; i++ {
 		f, isfile := piscine.ReadFile(os.Args[i])
 		if isfile == true {
-			piscine.FOVSecuringInt(f)
+			piscine.FOVSecuring(f)
 		} else {
-			piscine.FOVSecuringInt(os.Args[1:])
+			piscine.FOVSecuring(os.Args[1:])
 			break	
 		}
 	}
