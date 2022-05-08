@@ -18,7 +18,6 @@ func FOVSecuringInt(params []string) {
 	}
 	ib := convBoardRtoInt(brd)
 	initBoard(ib)
-	fmt.Println(ib)
 	result, isSolved := SecuringInt(ib, 0, 0)
 	if *visual_flg > 0 && *visual_flg < 1000 {
 		fmt.Fprintf(os.Stdout, "\x1b[2J")
